@@ -14,14 +14,14 @@ use tracing::instrument;
 pub struct ExecutionContext<'schema, 'request> {
     service_map: &'schema HashMap<String, ServiceDefinition>,
     // errors: Vec<async_graphql::Error>,
-    request_context: &'request RequestContext,
+    pub request_context: &'request RequestContext<'request>,
 }
 
 #[instrument(skip(query_plan, service_map, request_context))]
 pub async fn execute_query_plan(
     query_plan: &QueryPlan,
     service_map: &HashMap<String, ServiceDefinition>,
-    request_context: &RequestContext,
+    request_context: &RequestContext<'_>,
 ) -> Result<GraphQLResponse> {
     // let errors: Vec<async_graphql::Error> = vec![;
 
